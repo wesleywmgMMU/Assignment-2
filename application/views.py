@@ -42,7 +42,7 @@ def user_homepage(request):
     user_has_payment_method = Payment_method.objects.filter(user=user).exists()
 
     if user_has_payment_method:
-        payment_methods = Payment_method.objects.using('read_masked_data').filter(user=user)
+        payment_methods = Payment_method.objects.filter(user=user)
     else:
         return redirect('add_payment_method')
     
@@ -120,7 +120,7 @@ def admin_homepage(request):
 @login_required
 def view_payment_methods(request, user_id):
     current_user = request.user
-    user_payment_methods = Payment_method.objects.using('read_masked_data').filter(user_id=user_id)
+    user_payment_methods = Payment_method.objects.filter(user_id=user_id)
     user = get_object_or_404(User, pk=user_id)
 
     context = {
